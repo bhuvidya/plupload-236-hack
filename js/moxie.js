@@ -7254,8 +7254,32 @@ define("moxie/runtime/html5/file/FileInput", [
 							relativePath = '/' + file.webkitRelativePath.replace(/^\//, '');
 						}
 						
+
+                        /**
+                         * bhu
+                         *
+                         * this used to be the code
+                         */
+                        /*********
 						file = new File(I.uid, file);
 						file.relativePath = relativePath;
+                        *********/
+
+                        /**
+                         * ...and now it's the following.
+                         * I add the dom input element and the associated File object
+                         * to the moxie File object, so you can do things like get thumbnails
+                         * happening via a FileReader.readDataAsURL, for which you need the
+                         * browser's File object now attached to the input field. Phew.
+                         */
+                        var f = file;
+						file = new File(I.uid, file);
+						file.relativePath = relativePath;
+                        file._domFile = f;
+                        file._domInput = input;
+
+
+
 
 						comp.files.push(file);
 					});
